@@ -1,0 +1,21 @@
+{
+  "name": "function-calling-examples",
+  "description": "Several examples of function calling using Google Gemini models in Javascript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@google/generative-ai": "^0.14.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.5.2"
+  },
+  "scripts": {
+    "start:intro": "node -r ts-node/register --env-file=.env 1.intro/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

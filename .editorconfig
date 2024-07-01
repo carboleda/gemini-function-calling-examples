@@ -1,0 +1,29 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# Top-most EditorConfig file
+root = true
+
+# Set default charset to UTF-8
+[*]
+charset = utf-8
+
+# Indentation settings
+[*.ts]
+indent_style = space
+indent_size = 2
+
+# End of line settings
+[*.{ts,tsx}]
+end_of_line = lf
+
+# Trim trailing whitespace
+[*.{ts,tsx}]
+trim_trailing_whitespace = true
+
+# Insert final newline
+[*.{ts,tsx}]
+insert_final_newline = true
+
+# Set tab width to 2 spaces
+[*.md]
+tab_width = 2
