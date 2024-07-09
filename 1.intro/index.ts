@@ -48,7 +48,7 @@ async function handlePrompt(
   ];
 
   const model = genAI.getGenerativeModel(
-    { model: "gemini-1.5-flash-latest", tools },
+    { model: process.env.GEMINI_MODEL!!, tools },
     { apiVersion: "v1beta" }
   );
 
@@ -127,7 +127,7 @@ async function handlePrompt(
   while (true) {
     const input = await rl.question(
       'Enter "exit" or "q" to quit.\n' +
-        'Enter your location in format "City, Country": '
+        'Enter a location in format "City, Country": '
     );
 
     if (input === "exit" || input === "q") {

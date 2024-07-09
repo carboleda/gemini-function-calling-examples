@@ -9,10 +9,10 @@
   "devDependencies": {
     "@types/node": "^20.14.9",
     "ts-node": "^10.9.2",
-    "tsc": "^2.0.4",
     "typescript": "^5.5.2"
   },
   "scripts": {
+    "prestart": "echo 'Hello, World!'",
     "start:intro": "node -r ts-node/register --env-file=.env 1.intro/index.ts",
     "start:data:single": "node -r ts-node/register --env-file=.env 2.data-structures/single-parameter.ts",
     "start:data:multiple": "node -r ts-node/register --env-file=.env 2.data-structures/multiple-parameter.ts",
@@ -20,7 +20,16 @@
     "start:data:nested": "node -r ts-node/register --env-file=.env 2.data-structures/nested-parameter.ts",
     "start:parallel": "node -r ts-node/register --env-file=.env 3.parallel-function-calling/parallel.ts"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "google",
+    "gemini",
+    "function",
+    "calling",
+    "examples",
+    "javascript",
+    "typescript",
+    "nodejs"
+  ],
+  "author": "Carlos F Arboleda G <arbofercho@gmail.com>",
   "license": "ISC"
 }

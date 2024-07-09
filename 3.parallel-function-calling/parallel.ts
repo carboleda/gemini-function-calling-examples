@@ -16,7 +16,7 @@ const systemInstruction = `You are an expert Javascript developer, you can creat
 
 const model = genAI.getGenerativeModel(
   {
-    model: "gemini-1.5-flash-latest",
+    model: process.env.GEMINI_MODEL!!,
     tools,
     generationConfig: {
       temperature: 0,

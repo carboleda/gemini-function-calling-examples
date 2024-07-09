@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 
-local-files/ai-project/*
+3.parallel-function-calling/local-files/ai-project/*

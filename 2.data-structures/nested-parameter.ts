@@ -80,7 +80,7 @@ export const genAI = new GoogleGenerativeAI(process.env.API_KEY || "");
   ];
 
   const model = genAI.getGenerativeModel(
-    { model: "gemini-1.5-flash-latest", tools },
+    { model: process.env.GEMINI_MODEL!!, tools },
     { apiVersion: "v1beta" }
   );
 
