@@ -1,3 +1,7 @@
+# Custom
+3.parallel-function-calling/local-files/ai-project/*
+db.sqlite
+
 # Logs
 logs
 *.log
@@ -128,6 +132,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-
-3.parallel-function-calling/local-files/ai-project/*

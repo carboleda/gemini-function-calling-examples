@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "@google/generative-ai": "^0.14.0"
+    "@google/generative-ai": "^0.14.0",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@types/node": "^20.14.9",
@@ -18,7 +19,10 @@
     "start:data:multiple": "node -r ts-node/register --env-file=.env 2.data-structures/multiple-parameter.ts",
     "start:data:list": "node -r ts-node/register --env-file=.env 2.data-structures/list-parameter.ts",
     "start:data:nested": "node -r ts-node/register --env-file=.env 2.data-structures/nested-parameter.ts",
-    "start:parallel": "node -r ts-node/register --env-file=.env 3.parallel-function-calling/parallel.ts"
+    "start:parallel": "node -r ts-node/register --env-file=.env 3.parallel-function-calling/parallel.ts",
+    "start:sql:ddl": "node -r ts-node/register --env-file=.env 4.sql-talk-app/ddl.ts",
+    "start:sql:seed": "node -r ts-node/register --env-file=.env 4.sql-talk-app/seed.ts",
+    "start:sql": "node -r ts-node/register --env-file=.env 4.sql-talk-app/index.ts"
   },
   "keywords": [
     "google",
