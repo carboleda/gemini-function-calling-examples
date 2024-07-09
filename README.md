@@ -9,3 +9,5 @@ Examples:
     1. Lists of parameters
     1. Nested parameters and data structures
 3. Parallel Function Calls
+
+This repository is based in the official [generative-ai](https://github.com/GoogleCloudPlatform/generative-ai/tree/main/gemini/function-calling) repository created in Python.
