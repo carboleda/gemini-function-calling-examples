@@ -1,4 +1,6 @@
-# function-calling-examples
+# Gemini Function Calling Examples
+
+![image](https://github.com/carboleda/gemini-function-calling-examples/assets/4198484/b2bacd5d-58b8-4014-bd00-acdd662ec7d2)
 
 Several examples of function calling using Google Gemini models in Typescript
 
