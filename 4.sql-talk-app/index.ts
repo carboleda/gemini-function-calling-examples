@@ -131,7 +131,7 @@ const tools = [
     functionDeclarations: [getTablesFunc, getTableSchemaFunc, executeQueryFunc],
   },
 ];
-const systemInstruction = `Please give a concise, high-level summary followed by detail in plain language about where the information in your response is coming from in the database. Only use information that you learn from SQLite, do not make up information.`;
+const systemInstruction = `Please give a concise, high-level summary followed by detail in plain language about where the information in your response is coming from in the database. Only use information that you learn from SQLite, do not make up information. Always use the names coming from the getTables tool.`;
 
 const model = genAI.getGenerativeModel(
   {
@@ -198,18 +198,22 @@ async function handlePrompt(
   });
 
   while (true) {
-    const input = await rl.question(
-      'Enter "exit" or "q" to quit.\n' +
-        'Ask your quesion about the database": '
-    );
+    try {
+      const input = await rl.question(
+        'Enter "exit" or "q" to quit.\n' +
+          'Ask your quesion about the database": '
+      );
 
-    if (input === "exit" || input === "q") {
-      // Close the database connection
-      db.close();
-      rl.close();
-      break;
+      if (input === "exit" || input === "q") {
+        // Close the database connection
+        db.close();
+        rl.close();
+        break;
+      }
+
+      await handlePrompt(input);
+    } catch (error) {
+      console.error("Error processing input", error);
     }
-
-    await handlePrompt(input);
   }
 })();

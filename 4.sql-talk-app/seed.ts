@@ -26,12 +26,12 @@ db.serialize(() => {
   (3, 3)`);
 
   // Insert sample data into the notes table
-  db.run(`INSERT INTO notes (note, created_at, student_id, course_id) VALUES
-  (4.5, '2023-04-01', 1, 1),
-  (3.8, '2023-04-02', 1, 2),
-  (4.2, '2023-04-03', 2, 2),
-  (4.0, '2023-04-04', 3, 1),
-  (3.5, '2023-04-05', 3, 3)`);
+  db.run(`INSERT INTO notes (note, created_at, student_course_id) VALUES
+  (4.5, '2023-04-01', 1),
+  (3.8, '2023-04-02', 2),
+  (4.2, '2023-04-03', 3),
+  (4.0, '2023-04-04', 4),
+  (3.5, '2023-04-05', 5)`);
 });
 
 // Close the database connection

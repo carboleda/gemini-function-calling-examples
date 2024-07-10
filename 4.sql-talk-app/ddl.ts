@@ -8,6 +8,11 @@ const db = new sqlite3.Database("4.sql-talk-app/db.sqlite");
 
 // Open the database connection
 db.serialize(() => {
+  // Create foreign keys to establish relationships among tables
+  db.run(`
+    PRAGMA foreign_keys = ON
+  `);
+
   // Create a table
   db.run(`
     CREATE TABLE IF NOT EXISTS student (
@@ -33,6 +38,7 @@ db.serialize(() => {
   // Create a third table
   db.run(`
     CREATE TABLE IF NOT EXISTS student_course (
+      id INTEGER PRIMARY KEY,
       student_id INTEGER,
       course_id INTEGER,
       FOREIGN KEY (student_id) REFERENCES student(id),
@@ -45,16 +51,9 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY,
       note REAL,
       created_at TEXT,
-      student_id INTEGER,
-      course_id INTEGER,
-      FOREIGN KEY (student_id) REFERENCES student(id),
-      FOREIGN KEY (course_id) REFERENCES course(id)
+      student_course_id INTEGER,
+      FOREIGN KEY (student_course_id) REFERENCES student_course(id)
     )
-  `);
-
-  // Create foreign keys to establish relationships among tables
-  db.run(`
-    PRAGMA foreign_keys = ON
   `);
 });
 
