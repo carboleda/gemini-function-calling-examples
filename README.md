@@ -19,6 +19,7 @@ Several examples of function calling using Google Gemini models in Typescript
     - Multiple parameters `npm run start:data:multiple`
     - Lists of parameters `npm run start:data:list`
     - Nested parameters and data structures `npm run start:data:nested`
-3. Parallel Function Calls `npm run start:parallel`
+1. Parallel Function Calls `npm run start:parallel`
+1. Interaction with SQLite Database
 
 [!IMPORTANT] This repository is based in the official [generative-ai](https://github.com/GoogleCloudPlatform/generative-ai/tree/main/gemini/function-calling) repository created in Python.

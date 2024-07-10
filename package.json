@@ -2,7 +2,7 @@
   "name": "function-calling-examples",
   "description": "Several examples of function calling using Google Gemini models in Javascript",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "1.intro/index.ts",
   "dependencies": {
     "@google/generative-ai": "^0.14.0",
     "sqlite3": "^5.1.7"
