@@ -1,9 +1,12 @@
 import {
+  Content,
+  FunctionCallingMode,
   FunctionDeclaration,
   FunctionDeclarationSchemaType,
   FunctionResponse,
   FunctionResponsePart,
   GoogleGenerativeAI,
+  Part,
 } from "@google/generative-ai";
 import readline from "node:readline/promises";
 import sqlite3 from "sqlite3";
@@ -131,12 +134,19 @@ const tools = [
     functionDeclarations: [getTablesFunc, getTableSchemaFunc, executeQueryFunc],
   },
 ];
-const systemInstruction = `Please give a concise, high-level summary followed by detail in plain language about where the information in your response is coming from in the database. Only use information that you learn from SQLite, do not make up information. Always use the names coming from the getTables tool.`;
+// const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. Always use the names coming from the getTables tool.`;
+// const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. Use the information from the history to reduce the calls to get the database schema.`;
+const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. If the tables or table schema are available in the history, use them to reduce the calls to the database. Otherwise use the available tools to get the information.`;
 
 const model = genAI.getGenerativeModel(
   {
     model: process.env.GEMINI_MODEL!!,
     tools,
+    // toolConfig: {
+    //   functionCallingConfig: {
+    //     mode: FunctionCallingMode.ANY,
+    //   },
+    // },
     generationConfig: {
       temperature: 0,
     },
@@ -144,48 +154,61 @@ const model = genAI.getGenerativeModel(
   { apiVersion: "v1beta" }
 );
 
+let count = 0;
+const history: Content[] = [];
+function addToHistory(role: "user" | "model" | "function", parts: Part[]) {
+  history.push({ role, parts });
+}
+
 async function handlePrompt(
   userInput: string = "Generate a list of the students in the sudent table"
 ) {
   const prompt = `${systemInstruction}. ${userInput}`;
+  addToHistory("user", [{ text: userInput }]);
 
-  const chat = model.startChat();
+  const chat = model.startChat({
+    history,
+  });
 
   let functionCallingInProcess = true;
   let result = await chat.sendMessage(prompt);
 
   while (functionCallingInProcess) {
+    count++;
     const functionCalls = result?.response?.functionCalls() || [];
     // console.dir(result, { depth: null });
+    // console.log(count, functionCalls);
 
     if (functionCalls?.length === 0) {
       functionCallingInProcess = false;
       break;
     }
 
-    const apiResponse: FunctionResponse[] = [];
-    for await (const functionCall of functionCalls) {
-      console.log(functionCall);
-      const response = await functions[functionCall.name](functionCall.args);
-      // console.log(functionCall.name, response);
-      apiResponse.push({
-        name: functionCall.name,
-        response: response,
+    addToHistory(
+      "model",
+      functionCalls.map((functionCall) => ({ functionCall }))
+    );
+
+    const apiResponses: FunctionResponsePart[] = [];
+    for await (const { name, args } of functionCalls) {
+      // console.log(functionCall);
+
+      const response = await functions[name](args);
+      // console.log(name, response);
+
+      apiResponses.push({
+        functionResponse: {
+          name,
+          response: {
+            content: response,
+          },
+        },
       });
     }
 
-    result = await chat.sendMessage(
-      apiResponse.map(
-        ({ name, response }): FunctionResponsePart => ({
-          functionResponse: {
-            name,
-            response: {
-              content: response,
-            },
-          },
-        })
-      )
-    );
+    addToHistory("function", apiResponses);
+
+    result = await chat.sendMessage(apiResponses);
   }
 
   console.log("Answer: ", result.response.text());
