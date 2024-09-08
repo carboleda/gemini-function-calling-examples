@@ -136,7 +136,7 @@ const tools = [
 ];
 // const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. Always use the names coming from the getTables tool.`;
 // const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. Use the information from the history to reduce the calls to get the database schema.`;
-const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. If the tables or table schema are available in the history, use them to reduce the calls to the database. Otherwise use the available tools to get the information.`;
+const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. If the tables or table schema are available in the history, use them to reduce the calls to the database. Otherwise, use the available tools to get the information.`;
 
 const model = genAI.getGenerativeModel(
   {
