@@ -1,10 +1,12 @@
 import sqlite3 from "sqlite3";
 import fs from "node:fs";
 
-fs.unlinkSync("4.sql-talk-app/db.sqlite");
+const dbFile = `${__dirname}/db.sqlite`;
+
+fs.existsSync(dbFile) && fs.unlinkSync(dbFile);
 
 // Create a new database connection
-const db = new sqlite3.Database("4.sql-talk-app/db.sqlite");
+const db = new sqlite3.Database(dbFile);
 
 // Open the database connection
 db.serialize(() => {

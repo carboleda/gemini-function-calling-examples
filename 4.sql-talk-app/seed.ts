@@ -1,7 +1,8 @@
 import sqlite3 from "sqlite3";
 
 // Create a new database connection
-const db = new sqlite3.Database("4.sql-talk-app/db.sqlite");
+const dbFile = `${__dirname}/db.sqlite`;
+const db = new sqlite3.Database(dbFile);
 
 // Open the database connection
 db.serialize(() => {
@@ -18,6 +19,9 @@ db.serialize(() => {
   ('English Literature', 'Study of English literature', 'Prof. Emily White', 12)`);
 
   // Insert sample data into the student_course table to represent enrollments
+  // - Alice Smith is enrolled in Introduction to Computer Science and Advanced Mathematics
+  // - Bob Johnson is enrolled in Advanced Mathematics
+  // - Cathy Brown is enrolled in Introduction to Computer Science and English Literature
   db.run(`INSERT INTO student_course (student_id, course_id) VALUES
   (1, 1),
   (1, 2),
@@ -26,6 +30,11 @@ db.serialize(() => {
   (3, 3)`);
 
   // Insert sample data into the notes table
+  // - Alice Smith's notes for Introduction to Computer Science is 4.5
+  // - Alice Smith's notes for Advanced Mathematics is 3.8
+  // - Bob Johnson's notes for Advanced Mathematics is 4.2
+  // - Cathy Brown's notes for Introduction to Computer Science is 4.0
+  // - Cathy Brown's notes for English Literature is 3.5
   db.run(`INSERT INTO notes (note, created_at, student_course_id) VALUES
   (4.5, '2023-04-01', 1),
   (3.8, '2023-04-02', 2),

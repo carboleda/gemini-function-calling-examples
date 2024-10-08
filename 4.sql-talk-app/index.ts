@@ -1,9 +1,7 @@
 import {
   Content,
-  FunctionCallingMode,
   FunctionDeclaration,
   FunctionDeclarationSchemaType,
-  FunctionResponse,
   FunctionResponsePart,
   GoogleGenerativeAI,
   Part,
@@ -12,7 +10,8 @@ import readline from "node:readline/promises";
 import sqlite3 from "sqlite3";
 
 // Open the database
-const db = new sqlite3.Database("4.sql-talk-app/db.sqlite");
+const dbFile = `${__dirname}/db.sqlite`;
+const db = new sqlite3.Database(dbFile);
 
 async function getTables() {
   return new Promise((resolve, reject) => {
@@ -136,7 +135,17 @@ const tools = [
 ];
 // const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. Always use the names coming from the getTables tool.`;
 // const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. Use the information from the history to reduce the calls to get the database schema.`;
-const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. If the tables or table schema are available in the history, use them to reduce the calls to the database. Otherwise, use the available tools to get the information.`;
+// const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. If the tables or table schema are available in the history, use them to reduce the calls to the database. Otherwise, use the available tools to get the information.`;
+const systemInstruction = `Act as a business analytis engineer, plese generate formatted resposes extracting information from the SQLite database.
+### INSTRUCTIONS ###
+- Only use information that you learn from SQLite.
+- Refrain from making up information.
+- If the availble table names are needed, use the getTables tool to get the table names.
+- If the tables or table schema are available in the history, use them to reduce the calls to the database. Otherwise, use the available tools to get the information.
+
+### OUTPUT FORMAT ###
+- Use markdown tables to format the responses.
+- Include a summary of the information extracted from the database.`;
 
 const model = genAI.getGenerativeModel(
   {
@@ -146,6 +155,10 @@ const model = genAI.getGenerativeModel(
     //   functionCallingConfig: {
     //     mode: FunctionCallingMode.ANY,
     //   },
+    // },
+    // systemInstruction: {
+    //   role: "system",
+    //   parts: [{ text: systemInstruction }],
     // },
     generationConfig: {
       temperature: 0,
@@ -164,6 +177,7 @@ async function handlePrompt(
   userInput: string = "Generate a list of the students in the sudent table"
 ) {
   const prompt = `${systemInstruction}. ${userInput}`;
+  // const prompt = userInput;
   addToHistory("user", [{ text: userInput }]);
 
   const chat = model.startChat({
@@ -191,10 +205,10 @@ async function handlePrompt(
 
     const apiResponses: FunctionResponsePart[] = [];
     for await (const { name, args } of functionCalls) {
-      // console.log(functionCall);
+      console.log("functionCall", { name, args });
 
       const response = await functions[name](args);
-      // console.log(name, response);
+      console.log(name, response);
 
       apiResponses.push({
         functionResponse: {
