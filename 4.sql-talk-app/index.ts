@@ -83,13 +83,13 @@ async function executeQuery({ query }: { query: string }) {
   });
 }
 
-const getTablesFunc: FunctionDeclaration = {
+const getTablesDcl: FunctionDeclaration = {
   name: "getTables",
   description:
     "List tables in a database that will help answer the user's question",
 };
 
-const getTableSchemaFunc: FunctionDeclaration = {
+const getTableSchemaDcl: FunctionDeclaration = {
   name: "getTableSchema",
   description:
     "Get information about a table, including the description, schema, and number of rows that will help answer the user's question. Always use the names coming from the getTables tool.",
@@ -105,7 +105,7 @@ const getTableSchemaFunc: FunctionDeclaration = {
   },
 };
 
-const executeQueryFunc: FunctionDeclaration = {
+const executeQueryDcl: FunctionDeclaration = {
   name: "executeQuery",
   description: "Get information from data in SQLite using SQL queries",
   parameters: {
@@ -130,7 +130,7 @@ const functions: { [name: string]: Function } = {
 };
 const tools = [
   {
-    functionDeclarations: [getTablesFunc, getTableSchemaFunc, executeQueryFunc],
+    functionDeclarations: [getTablesDcl, getTableSchemaDcl, executeQueryDcl],
   },
 ];
 // const systemInstruction = `Your a business analytis engineer, plese generate formatted resposes extracting information from the database. Only use information that you learn from SQLite, do not make up information. Always use the names coming from the getTables tool.`;
