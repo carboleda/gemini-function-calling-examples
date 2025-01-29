@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "1.intro/index.ts",
   "dependencies": {
-    "@google/generative-ai": "^0.14.0",
+    "@google/generative-ai": "0.21.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {

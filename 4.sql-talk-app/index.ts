@@ -1,10 +1,9 @@
 import {
   Content,
   FunctionDeclaration,
-  FunctionDeclarationSchemaType,
   FunctionResponsePart,
   GoogleGenerativeAI,
-  Part,
+  SchemaType,
 } from "@google/generative-ai";
 import readline from "node:readline/promises";
 import sqlite3 from "sqlite3";
@@ -94,10 +93,10 @@ const getTableSchemaDcl: FunctionDeclaration = {
   description:
     "Get information about a table, including the description, schema, and number of rows that will help answer the user's question. Always use the names coming from the getTables tool.",
   parameters: {
-    type: FunctionDeclarationSchemaType.OBJECT,
+    type: SchemaType.OBJECT,
     properties: {
       tableName: {
-        type: FunctionDeclarationSchemaType.STRING,
+        type: SchemaType.STRING,
         description: "Table name of the table to get information about",
       },
     },
@@ -109,10 +108,10 @@ const executeQueryDcl: FunctionDeclaration = {
   name: "executeQuery",
   description: "Get information from data in SQLite using SQL queries",
   parameters: {
-    type: FunctionDeclarationSchemaType.OBJECT,
+    type: SchemaType.OBJECT,
     properties: {
       query: {
-        type: FunctionDeclarationSchemaType.STRING,
+        type: SchemaType.STRING,
         description:
           "SQL query on a single line that will help give quantitative answers to the user's question when run on a SQLite dataset and table. In the SQL query, always use the fully qualified dataset and table names.",
       },
@@ -169,16 +168,11 @@ const model = genAI.getGenerativeModel(
 
 let count = 0;
 const history: Content[] = [];
-function addToHistory(role: "user" | "model" | "function", parts: Part[]) {
-  history.push({ role, parts });
-}
 
 async function handlePrompt(
   userInput: string = "Generate a list of the students in the sudent table"
 ) {
   const prompt = `${systemInstruction}. ${userInput}`;
-  // const prompt = userInput;
-  addToHistory("user", [{ text: userInput }]);
 
   const chat = model.startChat({
     history,
@@ -198,17 +192,12 @@ async function handlePrompt(
       break;
     }
 
-    addToHistory(
-      "model",
-      functionCalls.map((functionCall) => ({ functionCall }))
-    );
-
     const apiResponses: FunctionResponsePart[] = [];
     for await (const { name, args } of functionCalls) {
       console.log("functionCall", { name, args });
 
       const response = await functions[name](args);
-      console.log(name, response);
+      // console.log(name, response);
 
       apiResponses.push({
         functionResponse: {
@@ -219,8 +208,6 @@ async function handlePrompt(
         },
       });
     }
-
-    addToHistory("function", apiResponses);
 
     result = await chat.sendMessage(apiResponses);
   }
