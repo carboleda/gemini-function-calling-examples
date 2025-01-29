@@ -1,6 +1,6 @@
 import {
   FunctionDeclaration,
-  FunctionDeclarationSchemaType,
+  SchemaType,
   GoogleGenerativeAI,
 } from "@google/generative-ai";
 
@@ -43,25 +43,25 @@ export const genAI = new GoogleGenerativeAI(process.env.API_KEY || "");
           name: "getMultipleLocationCoordinates",
           description: "Get coordinates of multiple locations",
           parameters: {
-            type: FunctionDeclarationSchemaType.OBJECT,
+            type: SchemaType.OBJECT,
             properties: {
               locations: {
-                type: FunctionDeclarationSchemaType.ARRAY,
+                type: SchemaType.ARRAY,
                 description: "A list of locations",
                 items: {
                   description: "Components of the location",
-                  type: FunctionDeclarationSchemaType.OBJECT,
+                  type: SchemaType.OBJECT,
                   properties: {
                     pointOfInterest: {
-                      type: FunctionDeclarationSchemaType.STRING,
+                      type: SchemaType.STRING,
                       description: "Name or type of point of interest",
                     },
                     city: {
-                      type: FunctionDeclarationSchemaType.STRING,
+                      type: SchemaType.STRING,
                       description: "City",
                     },
                     country: {
-                      type: FunctionDeclarationSchemaType.STRING,
+                      type: SchemaType.STRING,
                       description: "Country",
                     },
                   },

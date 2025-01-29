@@ -1,6 +1,6 @@
 import {
   FunctionDeclaration,
-  FunctionDeclarationSchemaType,
+  SchemaType,
   GoogleGenerativeAI,
 } from "@google/generative-ai";
 
@@ -38,34 +38,34 @@ export const genAI = new GoogleGenerativeAI(process.env.API_KEY || "");
           description:
             "Create a product listing using the details provided by the user",
           parameters: {
-            type: FunctionDeclarationSchemaType.OBJECT,
+            type: SchemaType.OBJECT,
             properties: {
               product: {
-                type: FunctionDeclarationSchemaType.ARRAY,
+                type: SchemaType.ARRAY,
                 items: {
-                  type: FunctionDeclarationSchemaType.OBJECT,
+                  type: SchemaType.OBJECT,
                   properties: {
                     name: {
-                      type: FunctionDeclarationSchemaType.STRING,
+                      type: SchemaType.STRING,
                     },
                     brand: {
-                      type: FunctionDeclarationSchemaType.STRING,
+                      type: SchemaType.STRING,
                     },
                     price: {
-                      type: FunctionDeclarationSchemaType.NUMBER,
+                      type: SchemaType.NUMBER,
                     },
                     category: {
-                      type: FunctionDeclarationSchemaType.STRING,
+                      type: SchemaType.STRING,
                     },
                     description: {
-                      type: FunctionDeclarationSchemaType.STRING,
+                      type: SchemaType.STRING,
                     },
                     colors: {
-                      type: FunctionDeclarationSchemaType.ARRAY,
+                      type: SchemaType.ARRAY,
                       items: {
-                        type: FunctionDeclarationSchemaType.OBJECT,
+                        type: SchemaType.OBJECT,
                         properties: {
-                          color: { type: FunctionDeclarationSchemaType.STRING },
+                          color: { type: SchemaType.STRING },
                         },
                       },
                     },

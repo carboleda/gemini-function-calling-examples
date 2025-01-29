@@ -1,6 +1,6 @@
 import {
   FunctionDeclaration,
-  FunctionDeclarationSchemaType,
+  SchemaType,
   GoogleGenerativeAI,
 } from "@google/generative-ai";
 
@@ -45,18 +45,18 @@ export const genAI = new GoogleGenerativeAI(process.env.API_KEY || "");
           name: "getDestination",
           description: "Get directions to a destination",
           parameters: {
-            type: FunctionDeclarationSchemaType.OBJECT,
+            type: SchemaType.OBJECT,
             properties: {
               destination: {
-                type: FunctionDeclarationSchemaType.STRING,
+                type: SchemaType.STRING,
                 description: "Destination that the user wants to go to",
               },
               modeOfTransportation: {
-                type: FunctionDeclarationSchemaType.STRING,
+                type: SchemaType.STRING,
                 description: "Mode of transportation to use",
               },
               departureTime: {
-                type: FunctionDeclarationSchemaType.STRING,
+                type: SchemaType.STRING,
                 description:
                   "Time that the user will leave for the destination",
               },

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
-import { FunctionDeclarationSchemaType } from "@google/generative-ai";
+import { SchemaType } from "@google/generative-ai";
 
 export class NodeFileSystem {
   workspace: string;
@@ -17,10 +17,10 @@ export class NodeFileSystem {
         description:
           "Creates or replaces a file with the given filePath and content",
         parameters: {
-          type: FunctionDeclarationSchemaType.OBJECT,
+          type: SchemaType.OBJECT,
           properties: {
-            filePath: { type: FunctionDeclarationSchemaType.NUMBER },
-            content: { type: FunctionDeclarationSchemaType.NUMBER },
+            filePath: { type: SchemaType.NUMBER },
+            content: { type: SchemaType.NUMBER },
           },
           required: ["filePath", "content"],
         },

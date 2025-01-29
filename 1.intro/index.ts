@@ -1,7 +1,7 @@
 import readline from "node:readline/promises";
 import {
   FunctionDeclaration,
-  FunctionDeclarationSchemaType,
+  SchemaType,
   GoogleGenerativeAI,
 } from "@google/generative-ai";
 
@@ -32,10 +32,10 @@ async function handlePrompt(
           name: "getCurrentTime",
           description: `Get the current time in a specific location`,
           parameters: {
-            type: FunctionDeclarationSchemaType.OBJECT,
+            type: SchemaType.OBJECT,
             properties: {
               timeZone: {
-                type: FunctionDeclarationSchemaType.STRING,
+                type: SchemaType.STRING,
                 description:
                   "Timezone in IANA format. Example America/Bogotá, Europe/Berlin",
               },
